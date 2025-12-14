@@ -1,0 +1,16 @@
+services:
+  memory-game:
+    build: .
+    container_name: memory_game
+    volumes:
+      - ./database:/app/database:rw
+      - ./feedback:/app/feedback:rw
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw
+      - ${XDG_RUNTIME_DIR}/pulse/native:${XDG_RUNTIME_DIR}/pulse/native
+      - ~/.config/pulse:/home/gameuser/.config/pulse:ro
+    environment:
+      - DISPLAY=${DISPLAY}
+      - PULSE_SERVER=unix:${XDG_RUNTIME_DIR}/pulse/native
+    network_mode: host
+    stdin_open: true
+    tty: true
